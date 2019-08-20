@@ -2,20 +2,22 @@ const fs = require("fs");
 const pathf = require('path');
 class QuickDB {
     constructor (id = null, path = "./dbs") {
+        var dbpath; 
         if (!fs.existsSync(path) || !fs.statSync(path).isDirectory()) fs.mkdirSync(path);
         if (id == null) {
             if (!fs.existsSync(pathf.join(path, "cid"))) {
                 id = 0;
                 fs.writeFileSync(pathf.join(path, "cid"), "0");
+                dbpath = pathf.join(path, `0.quickdb`);
             } else {
                 let lid = Number(fs.readFileSync(pathf.join(path, "cid"), "utf8"));
                 id = lid + 1;
                 fs.writeFileSync(pathf.join(path, "cid"), id.toString());
+                dbpath = pathf.join(path, `${id}.quickdb`);
             }
+            fs.writeFileSync(dbpath, "{}");
         }
         this.id = id;
-        let dbpath = pathf.join(path, `${id}.quickdb`);
-        fs.writeFileSync(dbpath, "{}");
         this.path = dbpath;
         return id;
     }

@@ -4,7 +4,7 @@ class QuickDB {
     constructor (id = null, path = "./dbs") {
         if (!fs.existsSync(path) || !fs.statSync(path).isDirectory()) fs.mkdirSync(path);
         if (id == null) {
-            if (fs.existsSync(pathf.join(path, "cid"))) {
+            if (!fs.existsSync(pathf.join(path, "cid"))) {
                 id = 0;
                 fs.writeFileSync(pathf.join(path, "cid"), "0");
             } else {

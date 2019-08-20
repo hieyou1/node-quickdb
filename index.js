@@ -9,16 +9,17 @@ class QuickDB {
                 id = 0;
                 fs.writeFileSync(pathf.join(path, "cid"), "0");
                 dbpath = pathf.join(path, `0.quickdb`);
+                this.path = dbpath;
             } else {
                 let lid = Number(fs.readFileSync(pathf.join(path, "cid"), "utf8"));
                 id = lid + 1;
                 fs.writeFileSync(pathf.join(path, "cid"), id.toString());
                 dbpath = pathf.join(path, `${id}.quickdb`);
+                this.path = dbpath;
             }
             fs.writeFileSync(dbpath, "{}");
         }
         this.id = id;
-        this.path = dbpath;
         return id;
     }
     readSync (key) {
